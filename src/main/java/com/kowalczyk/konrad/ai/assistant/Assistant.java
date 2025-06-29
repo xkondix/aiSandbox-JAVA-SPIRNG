@@ -1,6 +1,5 @@
-package com.kowalczyk.konrad.ai;
+package com.kowalczyk.konrad.ai.assistant;
 
 public interface Assistant {
-
     String chat(String message);
 }
