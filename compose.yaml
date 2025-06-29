@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  ollama:
+  ollama: #local llm image container
     image: ollama/ollama
     container_name: ollama
     restart: unless-stopped
@@ -10,12 +10,18 @@ services:
     volumes:
       - ollama:/root/.ollama  # keep models between restarts
 
-  redis:
+  redis: #chat memory
     image: redis:7
     container_name: redis
     ports:
       - "6379:6379"
     restart: unless-stopped
+
+  chroma: #vectore store
+    image: ghcr.io/chroma-core/chroma:0.4.21
+    container_name: chroma
+    ports:
+      - "8000:8000"
 
 volumes:
   ollama:

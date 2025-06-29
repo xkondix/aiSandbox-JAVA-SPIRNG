@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class OllamaChatModelProvider {
 
     @Bean
-    public OllamaChatModel gemmaChatModelProvider() {
+    public OllamaChatModel gemmaChatModel() {
         return OllamaChatModel.builder()
                 .baseUrl("http://localhost:11434")
                 .modelName("gemma3:4b")

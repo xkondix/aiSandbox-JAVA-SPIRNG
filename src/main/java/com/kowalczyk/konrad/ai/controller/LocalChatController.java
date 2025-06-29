@@ -8,15 +8,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class ChatController {
+@RequestMapping("/local")
+public class LocalChatController {
 
     private final GemmaModelService gemmaService;
     private final GemmaModelMemoryService gemmaMemoryService;
     private final GemmaModelMemoryRedisService gemmaRedisService;
 
 
-    public ChatController(GemmaModelService gemmaService, GemmaModelMemoryService gemmaMemoryService,
-                          GemmaModelMemoryRedisService gemmaRedisService) {
+    public LocalChatController(GemmaModelService gemmaService, GemmaModelMemoryService gemmaMemoryService,
+                               GemmaModelMemoryRedisService gemmaRedisService) {
         this.gemmaService = gemmaService;
         this.gemmaMemoryService = gemmaMemoryService;
         this.gemmaRedisService = gemmaRedisService;
