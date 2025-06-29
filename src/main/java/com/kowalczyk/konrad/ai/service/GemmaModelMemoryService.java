@@ -1,6 +1,6 @@
 package com.kowalczyk.konrad.ai.service;
 
-import com.kowalczyk.konrad.ai.Assistant;
+import com.kowalczyk.konrad.ai.assistant.Assistant;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.ollama.OllamaChatModel;
@@ -8,11 +8,11 @@ import dev.langchain4j.service.AiServices;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GemmaModelHistoryService {
+public class GemmaModelMemoryService {
 
     private final Assistant assistant;
 
-    public GemmaModelHistoryService(OllamaChatModel gemmaChatModelProvider) {
+    public GemmaModelMemoryService(OllamaChatModel gemmaChatModelProvider) {
         ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);
 
         this.assistant = AiServices.builder(Assistant.class)
