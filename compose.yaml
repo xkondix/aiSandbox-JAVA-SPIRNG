@@ -8,7 +8,14 @@ services:
     ports:
       - "11434:11434"
     volumes:
-      - ollama:/root/.ollama  # zachowuje pobrane modele między restartami
+      - ollama:/root/.ollama  # keep models between restarts
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
 
 volumes:
   ollama:
