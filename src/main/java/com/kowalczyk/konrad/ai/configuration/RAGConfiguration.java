@@ -14,10 +14,15 @@ import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
 import dev.langchain4j.store.embedding.chroma.ChromaEmbeddingStore;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 import static java.util.Arrays.asList;
 
+@Configuration
 public class RAGConfiguration {
 
     /**
@@ -26,7 +31,7 @@ public class RAGConfiguration {
      * This implementation uses a lightweight quantized model (AllMiniLmL6V2) optimized for local inference.
      */
     @Bean
-    public EmbeddingModel embeddingModel() { //transform text into vectors
+    public EmbeddingModel embeddingModel() {
         return new AllMiniLmL6V2QuantizedEmbeddingModel();
     }
 
@@ -73,10 +78,24 @@ public class RAGConfiguration {
      * ContentInjector configures which metadata fields (e.g., file name and segment index)
      * should be included in the prompt sent to the LLM during RAG (Retrieval-Augmented Generation).
      */
-    @Bean
-    public ContentInjector injector() {
+    @Bean("injectorMusic")
+    public ContentInjector injectorMusic() {
         return DefaultContentInjector.builder()
-                .metadataKeysToInclude(asList("file_name", "index"))
+                .metadataKeysToInclude(asList("file_name", "index", "title", "author", "language, created_at"))
+                .build();
+    }
+
+    @Bean("injectorStory")
+    public ContentInjector injectorStory() {
+        return DefaultContentInjector.builder()
+                .metadataKeysToInclude(asList("file_name", "index", "author", "created_at"))
+                .build();
+    }
+
+    @Bean("injectorDefault")
+    public ContentInjector injectorDefault() {
+        return DefaultContentInjector.builder()
+                .metadataKeysToInclude(List.of("file_name", "index", "created_at"))
                 .build();
     }
 
@@ -84,8 +103,27 @@ public class RAGConfiguration {
      * RetrievalAugmentor combines the retriever and injector to enhance
      * user queries with relevant context before passing them to the LLM.
      */
-    @Bean
-    public RetrievalAugmentor augmentor(ContentInjector injector, ContentRetriever retriever) {
+    @Bean("music")
+    public RetrievalAugmentor augmentorMusic(@Qualifier("injectorMusic") ContentInjector injector,
+                                             ContentRetriever retriever) {
+        return DefaultRetrievalAugmentor.builder()
+                .contentRetriever(retriever)
+                .contentInjector(injector)
+                .build();
+    }
+
+    @Bean("story")
+    public RetrievalAugmentor augmentorStory(@Qualifier("injectorStory") ContentInjector injector,
+                                             ContentRetriever retriever) {
+        return DefaultRetrievalAugmentor.builder()
+                .contentRetriever(retriever)
+                .contentInjector(injector)
+                .build();
+    }
+
+    @Bean("default")
+    public RetrievalAugmentor augmentorDefault(@Qualifier("injectorDefault") ContentInjector injector,
+                                               ContentRetriever retriever) {
         return DefaultRetrievalAugmentor.builder()
                 .contentRetriever(retriever)
                 .contentInjector(injector)
