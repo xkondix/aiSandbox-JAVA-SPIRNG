@@ -1,6 +1,7 @@
 package com.kowalczyk.konrad.ai.service;
 
 import com.kowalczyk.konrad.ai.assistant.Assistant;
+import com.kowalczyk.konrad.ai.model.ChatRAGPojo;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.ollama.OllamaChatModel;
@@ -50,13 +51,16 @@ public class GemmaModelMemoryRAGService {
                 .build();
     }
 
-    public String chatWithHistory(String message) {
-        return assistantRetriver.chat(message);
+    public String chatWithMetadata(ChatRAGPojo ragPojo) {
+        return switch (ragPojo.rag()) {
+            case MUSIC -> assistantMusic.chat(ragPojo.message());
+            case STORY -> assistantStory.chat(ragPojo.message());
+            default -> assistantDefault.chat(ragPojo.message());
+        };
     }
 
-    public String chatWithStory(String message) {
-        return assistantStory.chat(message);
+    public String chatWithoutMetadata(ChatRAGPojo ragPojo) {
+        return assistantRetriver.chat(ragPojo.message());
     }
-
 
 }

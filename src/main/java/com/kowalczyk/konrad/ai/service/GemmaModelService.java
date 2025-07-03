@@ -11,7 +11,6 @@ public class GemmaModelService {
     public GemmaModelService(OllamaChatModel gemmaChatModelProvider) {
         this.gemmaChatModelProvider = gemmaChatModelProvider;
     }
-
     public String chat(String message) {
         return gemmaChatModelProvider.chat(message);
     }

@@ -1,5 +1,6 @@
 package com.kowalczyk.konrad.ai.controller;
 
+import com.kowalczyk.konrad.ai.model.ChatRAGPojo;
 import com.kowalczyk.konrad.ai.model.ChatRequestPojo;
 import com.kowalczyk.konrad.ai.service.GemmaModelMemoryRAGService;
 import com.kowalczyk.konrad.ai.service.GemmaModelMemoryRedisService;
@@ -44,7 +45,7 @@ public class LocalChatController {
         return gemmaRedisService.chatWithRedis(body.username(), body.message());
     }
 
-    @PostMapping
+    @DeleteMapping
     @RequestMapping("/chat/memory/redis/{userId}")
     public ResponseEntity<String> removeRedisUser(@PathVariable String userId) {
         gemmaRedisService.removeUser(userId);
@@ -52,8 +53,14 @@ public class LocalChatController {
     }
 
     @PostMapping
+    @RequestMapping("/chat/rag/metadata")
+    public ResponseEntity<String> chatWithRagMetadata(@RequestBody ChatRAGPojo chatRAGPojo) {
+        return ResponseEntity.ok(gemmaRAGService.chatWithMetadata(chatRAGPojo));
+    }
+
+    @PostMapping
     @RequestMapping("/chat/rag")
-    public ResponseEntity<String> chatWithStory(@RequestBody String userInput) {
-        return ResponseEntity.ok(gemmaRAGService.chatWithStory(userInput));
+    public ResponseEntity<String> chatWithRag(@RequestBody ChatRAGPojo chatRAGPojo) {
+        return ResponseEntity.ok(gemmaRAGService.chatWithoutMetadata(chatRAGPojo));
     }
 }
