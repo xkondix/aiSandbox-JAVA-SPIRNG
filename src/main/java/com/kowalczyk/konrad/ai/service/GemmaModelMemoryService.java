@@ -20,7 +20,6 @@ public class GemmaModelMemoryService {
                 .chatMemory(chatMemory)
                 .build();
     }
-
     public String chatWithHistory(String message) {
         return assistant.chat(message);
     }

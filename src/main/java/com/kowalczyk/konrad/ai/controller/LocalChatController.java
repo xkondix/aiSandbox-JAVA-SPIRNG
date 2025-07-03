@@ -1,6 +1,8 @@
 package com.kowalczyk.konrad.ai.controller;
 
+import com.kowalczyk.konrad.ai.model.ChatRAGPojo;
 import com.kowalczyk.konrad.ai.model.ChatRequestPojo;
+import com.kowalczyk.konrad.ai.service.GemmaModelMemoryRAGService;
 import com.kowalczyk.konrad.ai.service.GemmaModelMemoryRedisService;
 import com.kowalczyk.konrad.ai.service.GemmaModelMemoryService;
 import com.kowalczyk.konrad.ai.service.GemmaModelService;
@@ -14,13 +16,15 @@ public class LocalChatController {
     private final GemmaModelService gemmaService;
     private final GemmaModelMemoryService gemmaMemoryService;
     private final GemmaModelMemoryRedisService gemmaRedisService;
+    private final GemmaModelMemoryRAGService gemmaRAGService;
 
 
     public LocalChatController(GemmaModelService gemmaService, GemmaModelMemoryService gemmaMemoryService,
-                               GemmaModelMemoryRedisService gemmaRedisService) {
+                               GemmaModelMemoryRedisService gemmaRedisService, GemmaModelMemoryRAGService gemmaRAGService) {
         this.gemmaService = gemmaService;
         this.gemmaMemoryService = gemmaMemoryService;
         this.gemmaRedisService = gemmaRedisService;
+        this.gemmaRAGService = gemmaRAGService;
     }
 
     @PostMapping
@@ -41,10 +45,22 @@ public class LocalChatController {
         return gemmaRedisService.chatWithRedis(body.username(), body.message());
     }
 
-    @PostMapping
+    @DeleteMapping
     @RequestMapping("/chat/memory/redis/{userId}")
     public ResponseEntity<String> removeRedisUser(@PathVariable String userId) {
         gemmaRedisService.removeUser(userId);
         return ResponseEntity.ok(String.format("User %s has been removed", userId));
+    }
+
+    @PostMapping
+    @RequestMapping("/chat/rag/metadata")
+    public ResponseEntity<String> chatWithRagMetadata(@RequestBody ChatRAGPojo chatRAGPojo) {
+        return ResponseEntity.ok(gemmaRAGService.chatWithMetadata(chatRAGPojo));
+    }
+
+    @PostMapping
+    @RequestMapping("/chat/rag")
+    public ResponseEntity<String> chatWithRag(@RequestBody ChatRAGPojo chatRAGPojo) {
+        return ResponseEntity.ok(gemmaRAGService.chatWithoutMetadata(chatRAGPojo));
     }
 }

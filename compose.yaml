@@ -11,14 +11,14 @@ services:
       - ollama:/root/.ollama  # keep models between restarts
 
   redis: #chat memory
-    image: redis:7
+    image: redis:latest
     container_name: redis
     ports:
       - "6379:6379"
     restart: unless-stopped
 
   chroma: #vectore store
-    image: ghcr.io/chroma-core/chroma:0.4.21
+    image: ghcr.io/chroma-core/chroma:0.6.4.dev226
     container_name: chroma
     ports:
       - "8000:8000"
