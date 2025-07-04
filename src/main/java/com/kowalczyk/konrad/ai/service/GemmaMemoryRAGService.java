@@ -12,40 +12,41 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GemmaModelMemoryRAGService {
+public class GemmaMemoryRAGService {
     private final Assistant assistantMusic;
     private final Assistant assistantStory;
     private final Assistant assistantDefault;
     private final Assistant assistantRetriver;
 
 
-    public GemmaModelMemoryRAGService(OllamaChatModel gemmaChatModelProvider, ContentRetriever retriever,
-                                      @Qualifier("music") RetrievalAugmentor augmentorMusic,
-                                      @Qualifier("story") RetrievalAugmentor augmentorStory,
-                                      @Qualifier("default") RetrievalAugmentor augmentorDefault) {
+    public GemmaMemoryRAGService(@Qualifier("gemmaModel") OllamaChatModel gemmaChatModel,
+                                 ContentRetriever retriever,
+                                 @Qualifier("music") RetrievalAugmentor augmentorMusic,
+                                 @Qualifier("story") RetrievalAugmentor augmentorStory,
+                                 @Qualifier("default") RetrievalAugmentor augmentorDefault) {
 
         ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);
 
         this.assistantRetriver = AiServices.builder(Assistant.class)
-                .chatModel(gemmaChatModelProvider)
+                .chatModel(gemmaChatModel)
                 .contentRetriever(retriever)
                 .chatMemory(chatMemory)
                 .build();
 
         this.assistantMusic = AiServices.builder(Assistant.class)
-                .chatModel(gemmaChatModelProvider)
+                .chatModel(gemmaChatModel)
                 .retrievalAugmentor(augmentorMusic)
                 .chatMemory(chatMemory)
                 .build();
 
         this.assistantStory = AiServices.builder(Assistant.class)
-                .chatModel(gemmaChatModelProvider)
+                .chatModel(gemmaChatModel)
                 .retrievalAugmentor(augmentorStory)
                 .chatMemory(chatMemory)
                 .build();
 
         this.assistantDefault = AiServices.builder(Assistant.class)
-                .chatModel(gemmaChatModelProvider)
+                .chatModel(gemmaChatModel)
                 .retrievalAugmentor(augmentorDefault)
                 .chatMemory(chatMemory)
                 .build();

@@ -68,7 +68,8 @@ public class DocumentController {
     @PostMapping("/path/metadata")
     public ResponseEntity<String> ingestPathWithMetadata(@RequestBody FilePathIngestPojo pojo) throws IOException {
         String text = Files.readString(Paths.get(pojo.filePath()));
-        List<TextSegment> segments = DocumentSplitters.recursive(300, 0).split(Document.from(text));
+        List<TextSegment> segments = DocumentSplitters.recursive(300, 0)
+                .split(Document.from(text)); //Document.from(String, Metadata) Metadata.from()
         List<TextSegment> textSegments = createSegmentsWithMetadata(segments, pojo.metadata());
         List<Embedding> embeddings = embeddingModel.embedAll(textSegments).content();
         embeddingStore.addAll(embeddings, textSegments);

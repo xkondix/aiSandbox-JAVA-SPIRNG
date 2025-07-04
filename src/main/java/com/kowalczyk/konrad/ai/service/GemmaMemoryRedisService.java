@@ -6,18 +6,20 @@ import dev.langchain4j.memory.chat.TokenWindowChatMemory;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.model.openai.OpenAiTokenCountEstimator;
 import dev.langchain4j.store.memory.chat.ChatMemoryStore;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import static dev.langchain4j.data.message.UserMessage.userMessage;
 import static dev.langchain4j.model.openai.OpenAiChatModelName.GPT_4_O;
 
 @Service
-public class GemmaModelMemoryRedisService {
-
+public class GemmaMemoryRedisService {
+    @Qualifier("gemmaModel")
     private final OllamaChatModel model;
     private final ChatMemoryStore redis;
 
-    public GemmaModelMemoryRedisService(OllamaChatModel model, ChatMemoryStore redis) {
+    public GemmaMemoryRedisService(@Qualifier("gemmaModel") OllamaChatModel model,
+                                   ChatMemoryStore redis) {
         this.model = model;
         this.redis = redis;
     }
