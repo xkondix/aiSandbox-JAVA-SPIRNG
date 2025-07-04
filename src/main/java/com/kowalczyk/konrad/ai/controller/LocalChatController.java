@@ -2,10 +2,7 @@ package com.kowalczyk.konrad.ai.controller;
 
 import com.kowalczyk.konrad.ai.model.ChatRAGPojo;
 import com.kowalczyk.konrad.ai.model.ChatRequestPojo;
-import com.kowalczyk.konrad.ai.service.GemmaModelMemoryRAGService;
-import com.kowalczyk.konrad.ai.service.GemmaModelMemoryRedisService;
-import com.kowalczyk.konrad.ai.service.GemmaModelMemoryService;
-import com.kowalczyk.konrad.ai.service.GemmaModelService;
+import com.kowalczyk.konrad.ai.service.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,30 +10,33 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/local")
 public class LocalChatController {
 
-    private final GemmaModelService gemmaService;
-    private final GemmaModelMemoryService gemmaMemoryService;
-    private final GemmaModelMemoryRedisService gemmaRedisService;
-    private final GemmaModelMemoryRAGService gemmaRAGService;
+    private final GemmaService gemmaService;
+    private final GemmaMemoryService gemmaMemoryService;
+    private final GemmaMemoryRedisService gemmaRedisService;
+    private final GemmaMemoryRAGService gemmaRAGService;
+    private final LlamaMathService gemmaMathService;
 
 
-    public LocalChatController(GemmaModelService gemmaService, GemmaModelMemoryService gemmaMemoryService,
-                               GemmaModelMemoryRedisService gemmaRedisService, GemmaModelMemoryRAGService gemmaRAGService) {
+    public LocalChatController(GemmaService gemmaService, GemmaMemoryService gemmaMemoryService,
+                               GemmaMemoryRedisService gemmaRedisService, GemmaMemoryRAGService gemmaRAGService,
+                               LlamaMathService gemmaMathService) {
         this.gemmaService = gemmaService;
         this.gemmaMemoryService = gemmaMemoryService;
         this.gemmaRedisService = gemmaRedisService;
         this.gemmaRAGService = gemmaRAGService;
+        this.gemmaMathService = gemmaMathService;
     }
 
     @PostMapping
     @RequestMapping("/chat")
-    public String chat(@RequestBody String userInput) {
-        return gemmaService.chat(userInput);
+    public String chat(@RequestBody String message) {
+        return gemmaService.chat(message);
     }
 
     @PostMapping
     @RequestMapping("/chat/memory")
-    public String chatMemory(@RequestBody String userInput) {
-        return gemmaMemoryService.chatWithHistory(userInput);
+    public String chatMemory(@RequestBody String message) {
+        return gemmaMemoryService.chatWithHistory(message);
     }
 
     @PostMapping
@@ -62,5 +62,11 @@ public class LocalChatController {
     @RequestMapping("/chat/rag")
     public ResponseEntity<String> chatWithRag(@RequestBody ChatRAGPojo chatRAGPojo) {
         return ResponseEntity.ok(gemmaRAGService.chatWithoutMetadata(chatRAGPojo));
+    }
+
+    @PostMapping
+    @RequestMapping("/chat/math")
+    public ResponseEntity<String> chatWithRag(@RequestBody String message) {
+        return ResponseEntity.ok(gemmaMathService.chatMathCalc(message));
     }
 }

@@ -4,11 +4,11 @@ import dev.langchain4j.model.openai.OpenAiChatModel;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GPTModelService {
+public class GPTService {
 
     private final OpenAiChatModel gptChatModel;
 
-    public GPTModelService(OpenAiChatModel gptChatModel) {
+    public GPTService(OpenAiChatModel gptChatModel) {
         this.gptChatModel = gptChatModel;
     }
 
