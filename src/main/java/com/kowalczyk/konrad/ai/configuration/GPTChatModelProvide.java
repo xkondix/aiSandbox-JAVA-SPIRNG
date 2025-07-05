@@ -16,6 +16,8 @@ public class GPTChatModelProvide {
         return OpenAiChatModel.builder()
                 .apiKey(key)
                 .modelName("gpt-4o")
+                .logRequests(true)
+                .logResponses(true)
                 .build();
     }
 

@@ -45,6 +45,12 @@ public class LocalChatController {
         return gemmaRedisService.chatWithRedis(body.username(), body.message());
     }
 
+    @PostMapping
+    @RequestMapping("/chat/memory/redis/assistant")
+    public String chatMemoryRedisAiAssistant(@RequestBody ChatRequestPojo body) {
+        return gemmaRedisService.chatWithRedisAiAssistant(body.username(), body.message());
+    }
+
     @DeleteMapping
     @RequestMapping("/chat/memory/redis/{userId}")
     public ResponseEntity<String> removeRedisUser(@PathVariable String userId) {
