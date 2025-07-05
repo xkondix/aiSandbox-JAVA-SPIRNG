@@ -1,5 +1,6 @@
 package com.kowalczyk.konrad.ai.controller;
 
+import com.kowalczyk.konrad.ai.model.ArtistPojo;
 import com.kowalczyk.konrad.ai.model.ChatRAGPojo;
 import com.kowalczyk.konrad.ai.model.ChatRequestPojo;
 import com.kowalczyk.konrad.ai.service.*;
@@ -14,17 +15,19 @@ public class LocalChatController {
     private final GemmaMemoryService gemmaMemoryService;
     private final GemmaMemoryRedisService gemmaRedisService;
     private final GemmaMemoryRAGService gemmaRAGService;
-    private final LlamaMathService gemmaMathService;
+    private final LlamaMathService llamaMathService;
+    private final LlamaArtistService llamaArtistService;
 
 
     public LocalChatController(GemmaService gemmaService, GemmaMemoryService gemmaMemoryService,
                                GemmaMemoryRedisService gemmaRedisService, GemmaMemoryRAGService gemmaRAGService,
-                               LlamaMathService gemmaMathService) {
+                               LlamaMathService llamaMathService, LlamaArtistService llamaArtistService) {
         this.gemmaService = gemmaService;
         this.gemmaMemoryService = gemmaMemoryService;
         this.gemmaRedisService = gemmaRedisService;
         this.gemmaRAGService = gemmaRAGService;
-        this.gemmaMathService = gemmaMathService;
+        this.llamaMathService = llamaMathService;
+        this.llamaArtistService = llamaArtistService;
     }
 
     @PostMapping
@@ -72,7 +75,19 @@ public class LocalChatController {
 
     @PostMapping
     @RequestMapping("/chat/math")
-    public ResponseEntity<String> chatWithRag(@RequestBody String message) {
-        return ResponseEntity.ok(gemmaMathService.chatMathCalc(message));
+    public ResponseEntity<String> chatWithMathCalculator(@RequestBody String message) {
+        return ResponseEntity.ok(llamaMathService.chatMathCalc(message));
+    }
+
+    @PostMapping
+    @RequestMapping("/chat/story")
+    public ResponseEntity<String> chatWithStoryContext(@RequestBody ArtistPojo pojo) {
+        return ResponseEntity.ok(llamaArtistService.generateStory(pojo.topic(), pojo.lines()));
+    }
+
+    @PostMapping
+    @RequestMapping("/chat/story/message")
+    public ResponseEntity<String> chatWithStoryContext(@RequestBody String message) {
+        return ResponseEntity.ok(llamaArtistService.generateStoryMessage(message));
     }
 }
