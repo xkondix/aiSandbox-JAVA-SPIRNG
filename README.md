@@ -19,8 +19,6 @@ This project demonstrates how to build a **local AI-powered assistant** using `L
 
 To run this project locally with large language models:
 
-### 1. Start your Ollama container:
-
 ```bash
 docker compose up -d
 docker exec -it ollama bash
