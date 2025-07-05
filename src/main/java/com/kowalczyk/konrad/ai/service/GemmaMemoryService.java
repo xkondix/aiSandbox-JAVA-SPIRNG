@@ -16,6 +16,11 @@ public class GemmaMemoryService {
     public GemmaMemoryService(@Qualifier("gemmaModel") OllamaChatModel gemmaChatModel) {
         ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);
 
+//        MessageWindowChatMemory.builder()
+//                .id("user-id")
+//                .maxMessages(3)
+//                .build();
+
         this.assistant = AiServices.builder(Assistant.class)
                 .chatModel(gemmaChatModel)
                 .chatMemory(chatMemory)
