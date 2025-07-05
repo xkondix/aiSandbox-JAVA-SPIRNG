@@ -10,7 +10,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Component
 public class ArtistToolComponent {
@@ -24,21 +26,25 @@ public class ArtistToolComponent {
             dir.mkdirs();
         }
     }
-
     @Tool("Save the given story to a file on disk and return name of the story")
     public String saveStoryToFile(String story) {
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
         String filename = OUTPUT_DIR + "/story_" + COUNTER.getAndIncrement() + "_" + timestamp + ".txt";
 
         try (FileWriter writer = new FileWriter(filename)) {
-            writer.write(story);
+            writer.write(formatTextToNewLines(story));
             log.info("Story saved to file: {}", filename);
             return filename;
         } catch (IOException e) {
             log.error("Failed to write poem to file", e);
             return "Exception occurs";
         }
+    }
 
+    private String formatTextToNewLines(String input) {
+        return Arrays.stream(input.split("(?<=[.!?])\\s+"))
+                .map(String::trim)
+                .collect(Collectors.joining("\n"));
     }
 
 }
