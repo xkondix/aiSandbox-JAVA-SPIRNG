@@ -37,6 +37,16 @@ ollama pull llama3.1:8b
 - **Chroma**: document RAG vector DB
 - **Docker Compose**
 
+---
+## Useful pages
+**Github**
+- https://github.com/langchain4j/langchain4j-examples/ `(spring boot)`
+- https://github.com/cescoffier/langchain4j-deep-dive/ `(quarkus)`
+
+**Page**
+- https://docs.langchain4j.dev/ `(official documentation)`
+
+
 
 
 
