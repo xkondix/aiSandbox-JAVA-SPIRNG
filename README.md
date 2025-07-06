@@ -3,7 +3,7 @@
 # 🤖 Local AI Assistant with LangChain4j, Ollama & Spring Boot
 
 This project demonstrates how to build a **local AI-powered assistant** using `LangChain4j`, `Spring Boot`, and `Ollama`, enabling tool-calling, Retrieval-Augmented Generation (RAG), chat memory, Redis.
-
+Postman collection version 2.1 available in assets folder.
 ---
 
 ## 🔥 Features
