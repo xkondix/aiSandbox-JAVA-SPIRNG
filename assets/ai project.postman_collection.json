@@ -1,0 +1,456 @@
+{
+	"info": {
+		"_postman_id": "64f6935d-f233-4860-9f5c-9f8eafb8037c",
+		"name": "ai project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. chat",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"message\" : \"What is my name?\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/local/chat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"local",
+						"chat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. chat with temporary memory",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"message\" : \"17 + 23\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/local/chat/memory",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"local",
+						"chat",
+						"memory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. chat with Redis memory (manualy)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"username\" : \"Konrad\",\r\n\"message\" : \"My name is Konrad\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/local/chat/memory/redis",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"local",
+						"chat",
+						"memory",
+						"redis"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. chat with Redis memory (Ai Assistant)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"username\" : \"Konrad\",\r\n\"message\" : \"My name is Konrad\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/local/chat/memory/redis/assistant",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"local",
+						"chat",
+						"memory",
+						"redis",
+						"assistant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. remove data from Redis",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "http://localhost:8080/local/chat/memory/redis/Konrad",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"local",
+						"chat",
+						"memory",
+						"redis",
+						"Konrad"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. chat with RAG without metadata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"message\" : \"Who is Konrad Kowalczyk?\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/local/chat/rag",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"local",
+						"chat",
+						"rag"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. chat with RAG with metadata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"message\" : \"Who is Konrad Kowalczyk?\",\r\n\"rag\": \"STORY\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/local/chat/rag/metadata",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"local",
+						"chat",
+						"rag",
+						"metadata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. add document by path with metadata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"filePath\": \"src/main/resources/files/history.txt\",\r\n    \"metadata\": {\r\n        \"file_name\": \"history.txt\",\r\n        \"author\": \"Konrad Kowalczyk\",\r\n        \"created_at\": \"2025-01-01\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/chroma/path/metadata",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"chroma",
+						"path",
+						"metadata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. add document by path without metadata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"filePath\": \"src/main/resources/files/song_ro.txt\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/chroma/path",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"chroma",
+						"path"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. add document by text without metadata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\": \"The Pirates of the Caribbean sailed through a mysterious rift in the sea, only to find themselves face-to-face with Jedi warriors from a distant galaxy. Blades clashed as Jack Sparrow’s cunning was put to the ultimate test against lightsabers and the power of the Force\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/chroma/text",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"chroma",
+						"text"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. get chroma query score",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/chroma/score?query=Who is Konrad Kowalczyk?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"chroma",
+						"score"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "Who is Konrad Kowalczyk?"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. remove data from chroma",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/chroma/clear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"chroma",
+						"clear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. chat with Tools (Math)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"message\" : \"17 + 23\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/local/chat/math",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"local",
+						"chat",
+						"math"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. chat with Tools (generate story)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"topic\": \"Black Peral\",\r\n  \"lines\": 6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/local/chat/story",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"local",
+						"chat",
+						"story"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. chat with Tools (generate story message)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"message\" : \"Write a story about Java. The story should be 3 lines long and your response should only include the story topic. Then save this story to a text file on disk.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/local/chat/story/message",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"local",
+						"chat",
+						"story",
+						"message"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
