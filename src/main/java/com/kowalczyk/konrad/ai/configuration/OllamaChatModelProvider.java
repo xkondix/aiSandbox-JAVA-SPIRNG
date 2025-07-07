@@ -1,6 +1,5 @@
 package com.kowalczyk.konrad.ai.configuration;
 
-import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
