@@ -1,6 +1,7 @@
 package com.kowalczyk.konrad.ai.controller;
 
 import com.kowalczyk.konrad.ai.service.GPTService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +18,8 @@ public class ApiChatController {
 
     @PostMapping
     @RequestMapping("/chat")
-    public String chat(@RequestBody String userInput) {
-        return gptModelService.chat(userInput);
+    public ResponseEntity<String> chat(@RequestBody String userInput) {
+        return ResponseEntity.ok(gptModelService.chat(userInput));
     }
 
 }

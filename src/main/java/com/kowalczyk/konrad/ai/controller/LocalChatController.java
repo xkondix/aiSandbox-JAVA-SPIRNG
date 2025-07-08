@@ -38,20 +38,20 @@ public class LocalChatController {
 
     @PostMapping
     @RequestMapping("/chat/memory")
-    public String chatMemory(@RequestBody String message) {
-        return gemmaMemoryService.chatWithHistory(message);
+    public ResponseEntity<String> chatMemory(@RequestBody String message) {
+        return ResponseEntity.ok(gemmaMemoryService.chatWithHistory(message));
     }
 
     @PostMapping
     @RequestMapping("/chat/memory/redis")
-    public String chatMemoryRedis(@RequestBody ChatRequestPojo body) {
-        return gemmaRedisService.chatWithRedis(body.username(), body.message());
+    public ResponseEntity<String> chatMemoryRedis(@RequestBody ChatRequestPojo body) {
+        return ResponseEntity.ok(gemmaRedisService.chatWithRedis(body.username(), body.message()));
     }
 
     @PostMapping
     @RequestMapping("/chat/memory/redis/assistant")
-    public String chatMemoryRedisAiAssistant(@RequestBody ChatRequestPojo body) {
-        return gemmaRedisService.chatWithRedisAiAssistant(body.username(), body.message());
+    public ResponseEntity<String> chatMemoryRedisAiAssistant(@RequestBody ChatRequestPojo body) {
+        return ResponseEntity.ok(gemmaRedisService.chatWithRedisAiAssistant(body.username(), body.message()));
     }
 
     @DeleteMapping
