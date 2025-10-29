@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"message\" : \"What is my name?\"\r\n}",
+					"raw": "{\r\n\"message\" : \"17 + 23\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -41,7 +41,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"message\" : \"17 + 23\"\r\n}",
+					"raw": "{\r\n\"message\" : \"What is my name?\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -71,7 +71,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"username\" : \"Konrad\",\r\n\"message\" : \"My name is Konrad\"\r\n}",
+					"raw": "{\r\n\"username\" : \"Konrad\",\r\n\"message\" : \"I am Konrad\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -102,7 +102,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"username\" : \"Konrad\",\r\n\"message\" : \"My name is Konrad\"\r\n}",
+					"raw": "{\r\n\"username\" : \"Konrad\",\r\n\"message\" : \"What is my name?\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -321,7 +321,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/chroma/score?query=Who is Konrad Kowalczyk?",
+					"raw": "http://localhost:8080/chroma/score?query=karaoke",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -334,7 +334,7 @@
 					"query": [
 						{
 							"key": "query",
-							"value": "Who is Konrad Kowalczyk?"
+							"value": "karaoke"
 						}
 					]
 				}
@@ -398,7 +398,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"topic\": \"Black Peral\",\r\n  \"lines\": 6\r\n}",
+					"raw": "{\r\n  \"topic\": \"Karaoke night\",\r\n  \"lines\": 3\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -416,6 +416,37 @@
 						"local",
 						"chat",
 						"story"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. chat with RAG and Tools (generate story)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"topic\": \"Konrad Kowalczyk\",\r\n  \"lines\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/local/chat/story/rag",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"local",
+						"chat",
+						"story",
+						"rag"
 					]
 				}
 			},

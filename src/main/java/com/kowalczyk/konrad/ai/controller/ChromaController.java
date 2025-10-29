@@ -65,10 +65,15 @@ public class ChromaController {
     public ResponseEntity<String> ingestPathWithMetadata(@RequestBody FilePathIngestPojo pojo) throws IOException {
         String text = Files.readString(Paths.get(pojo.filePath()));
         List<TextSegment> segments = DocumentSplitters.recursive(300, 0)
-                .split(Document.from(text)); //Document.from(String, Metadata) Metadata.from()
-        List<TextSegment> textSegments = createSegmentsWithMetadata(segments, pojo.metadata());
-        List<Embedding> embeddings = embeddingModel.embedAll(textSegments).content();
-        embeddingStore.addAll(embeddings, textSegments);
+                .split(Document.from(text, Metadata.from(pojo.metadata())));
+//        ALTERNATIVE SOLUTION
+//        List<TextSegment> segments = DocumentSplitters.recursive(300, 0)
+//                .split(Document.from(text));
+//        List<TextSegment> textSegments = createSegmentsWithMetadata(segments, pojo.metadata());
+//        List<Embedding> embeddings = embeddingModel.embedAll(textSegments).content();
+//        embeddingStore.addAll(embeddings, textSegments);
+        List<Embedding> embeddings = embeddingModel.embedAll(segments).content();
+        embeddingStore.addAll(embeddings, segments);
         return ResponseEntity.ok("File ingested successfully with metadata");
     }
 
