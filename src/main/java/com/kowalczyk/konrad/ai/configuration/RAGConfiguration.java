@@ -44,6 +44,8 @@ public class RAGConfiguration {
         return ChromaEmbeddingStore.builder()
                 .baseUrl("http://localhost:8000")
                 .collectionName("documents")
+                .logRequests(true)
+                .logResponses(true)
                 .build();
     }
 

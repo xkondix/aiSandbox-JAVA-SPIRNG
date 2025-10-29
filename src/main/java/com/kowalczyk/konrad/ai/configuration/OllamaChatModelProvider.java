@@ -4,6 +4,8 @@ import dev.langchain4j.model.ollama.OllamaChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.Duration;
+
 @Configuration
 public class OllamaChatModelProvider {
 
@@ -12,6 +14,8 @@ public class OllamaChatModelProvider {
         return OllamaChatModel.builder()
                 .baseUrl("http://localhost:11434")
                 .modelName("gemma3:4b")
+                .maxRetries(3)
+                .timeout(Duration.ofSeconds(120))
                 .logRequests(true)
                 .logResponses(true)
                 .build();

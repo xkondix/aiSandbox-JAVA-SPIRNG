@@ -18,16 +18,20 @@ public class LocalChatController {
     private final LlamaMathService llamaMathService;
     private final LlamaArtistService llamaArtistService;
 
+    private final LlamaArtistRAGService llamaArtistRAGService;
+
 
     public LocalChatController(GemmaService gemmaService, GemmaMemoryService gemmaMemoryService,
                                GemmaMemoryRedisService gemmaRedisService, GemmaMemoryRAGService gemmaRAGService,
-                               LlamaMathService llamaMathService, LlamaArtistService llamaArtistService) {
+                               LlamaMathService llamaMathService, LlamaArtistService llamaArtistService,
+                               LlamaArtistRAGService llamaArtistRAGService) {
         this.gemmaService = gemmaService;
         this.gemmaMemoryService = gemmaMemoryService;
         this.gemmaRedisService = gemmaRedisService;
         this.gemmaRAGService = gemmaRAGService;
         this.llamaMathService = llamaMathService;
         this.llamaArtistService = llamaArtistService;
+        this.llamaArtistRAGService = llamaArtistRAGService;
     }
 
     @PostMapping
@@ -90,4 +94,12 @@ public class LocalChatController {
     public ResponseEntity<String> chatWithStoryContext(@RequestBody String message) {
         return ResponseEntity.ok(llamaArtistService.generateStoryMessage(message));
     }
+
+    @PostMapping
+    @RequestMapping("/chat/story/rag")
+    public ResponseEntity<String> chatWithRAGStoryContext(@RequestBody ArtistPojo pojo) {
+        return ResponseEntity.ok(llamaArtistRAGService.generateStory(pojo.topic(), pojo.lines()));
+    }
+
+
 }

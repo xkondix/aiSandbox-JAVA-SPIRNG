@@ -40,7 +40,7 @@ public class GemmaMemoryRedisService {
         ChatMemory memory = TokenWindowChatMemory.builder()
                 .chatMemoryStore(redis)
                 .id(userId)
-                .maxTokens(1000, new OpenAiTokenCountEstimator(GPT_4_O))
+                .maxTokens(4096, new OpenAiTokenCountEstimator(GPT_4_O))
                 .build();
         memory.add(userMessage(message));
         ChatResponse response = model.chat(memory.messages());
